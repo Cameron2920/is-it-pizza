@@ -28,6 +28,8 @@ class QuestionablePizzasController < ApplicationController
   private
 
   def questionable_pizza_params
-    params.require(:questionable_pizza).permit(:pizza_image)
+    accepted_params = params.require(:questionable_pizza).permit(:pizza_image)
+    accepted_params[:client_ip] = request.remote_ip
+    accepted_params
   end
 end
