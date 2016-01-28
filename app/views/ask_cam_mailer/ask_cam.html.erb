@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<h1>Hey cam, is this pizza?</h1>
+<img src="<%= ENV['HOST'] %>/<%= @image_file_path %>">
+<a href="<%= ENV['HOST'] %>/questionable_pizzas/cam_says/<%= @questionable_pizza_id %>/yes">Yeah, it's pizza alrightee.</a>
+<a href="<%= ENV['HOST'] %>/questionable_pizzas/cam_says/<%= @questionable_pizza_id %>/no">Nah, you can't convince me thats pizza.</a>
+</body>
+</html>
