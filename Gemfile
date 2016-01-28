@@ -41,3 +41,5 @@ gem 'spring',        group: :development
 gem 'paperclip'
 
 gem 'actionmailer'
+
+gem 'unicorn', group: :production
