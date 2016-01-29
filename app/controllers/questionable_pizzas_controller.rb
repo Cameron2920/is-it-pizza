@@ -2,15 +2,12 @@ class QuestionablePizzasController < ApplicationController
   http_basic_authenticate_with name: ENV['CAM_NAME'], password: ENV['CAM_PASSWORD'], only: :cam_says
 
   def ask_cam
-    if params.has_key?(:questionable_pizza)
-      @is_it_pizza = QuestionablePizza.create(questionable_pizza_params)
-    end
+    @can_ask_cam = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:waiting_on_cam], :client_ip => request.remote_ip).count == 0
+    @is_it_pizza = QuestionablePizza.new
+  end
 
-    if !@is_it_pizza.nil? && @is_it_pizza.errors.nil?
-
-    else
-      @is_it_pizza = QuestionablePizza.new
-    end
+  def create
+    @is_it_pizza = QuestionablePizza.create(questionable_pizza_params)
   end
 
   def cam_says
@@ -23,6 +20,10 @@ class QuestionablePizzasController < ApplicationController
 
       end
     end
+  end
+
+  def index
+    @questionable_pizzas = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:yes]).limit(15).order('updated_at DESC')
   end
 
   private
