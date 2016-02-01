@@ -12,13 +12,11 @@ class QuestionablePizzasController < ApplicationController
 
   def cam_says
     @questionable_pizza = QuestionablePizza.find(params[:id])
+    @saved_pizza = false
 
     if @questionable_pizza
       @questionable_pizza.is_it_pizza = params[:is_it_pizza]
-
-      if @questionable_pizza.save
-
-      end
+      @saved_pizza = @questionable_pizza.save
     end
   end
 
