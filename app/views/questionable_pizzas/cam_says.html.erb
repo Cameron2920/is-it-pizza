@@ -1,6 +1,8 @@
 <% if @saved_pizza %>
     <h1>WOWIE CAM! I'm glad you're here. That was a tricky one.</h1>
 <% else %>
-    <%= @questionable_pizza.errors %>
+    <% @questionable_pizza.errors.each do |error| %>
+        <%= error %>
+    <% end %>
     <h1>Oh boy, something went wrong.</h1>
 <% end %>
