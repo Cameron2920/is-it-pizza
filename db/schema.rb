@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160128065223) do
+ActiveRecord::Schema.define(version: 20160612202601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,10 @@ ActiveRecord::Schema.define(version: 20160128065223) do
     t.integer  "pizza_image_file_size"
     t.datetime "pizza_image_updated_at"
     t.string   "client_ip"
+    t.string   "pizza_video_file_name"
+    t.string   "pizza_video_content_type"
+    t.integer  "pizza_video_file_size"
+    t.datetime "pizza_video_updated_at"
   end
 
 end

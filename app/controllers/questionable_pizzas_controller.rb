@@ -8,6 +8,11 @@ class QuestionablePizzasController < ApplicationController
 
   def create
     @is_it_pizza = QuestionablePizza.create(questionable_pizza_params)
+    flash[:error]
+    if @is_it_pizza.errors.any?
+      flash[:error] = @is_it_pizza.errors.first
+      redirect_to questionable_pizzas_ask_cam_path, :flash => { :error =>  @is_it_pizza.errors.first }
+    end
   end
 
   def cam_says
@@ -27,7 +32,7 @@ class QuestionablePizzasController < ApplicationController
   private
 
   def questionable_pizza_params
-    accepted_params = params.require(:questionable_pizza).permit(:pizza_image)
+    accepted_params = params.fetch(:questionable_pizza, {}).permit(:pizza_image, :pizza_video)
     accepted_params[:client_ip] = request.remote_ip
     accepted_params
   end
