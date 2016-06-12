@@ -19,6 +19,10 @@ class QuestionablePizza < ActiveRecord::Base
     self.pizza_video
   end
 
+  def is_pizza_image
+    self.pizza_image.exists?
+  end
+
   private
 
   def set_is_it_pizza
@@ -26,7 +30,7 @@ class QuestionablePizza < ActiveRecord::Base
   end
 
   def ask_cam
-    AskCamMailer.ask_cam(self.pizza_media.url, self.id).deliver
+    AskCamMailer.ask_cam(self.pizza_media.url, self.id, self.is_pizza_image).deliver
   end
 
   def ip_waiting_on_cam

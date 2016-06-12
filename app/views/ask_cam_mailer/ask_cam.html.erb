@@ -5,7 +5,11 @@
 </head>
 <body>
 <h1>Hey cam, is this pizza?</h1>
+<% if @is_pizza_image %>
 <img src="<%= ENV['HOST'] %>/<%= @media_file_path %>">
+<% else %>
+    <video src="<%= ENV['HOST'] %>/<%= @media_file_path %>" controls="controls"></video>
+<% end %>
 <a href="<%= ENV['HOST'] %>/questionable_pizzas/cam_says/<%= @questionable_pizza_id %>/yes">Yeah, it's pizza alrightee.</a>
 <a href="<%= ENV['HOST'] %>/questionable_pizzas/cam_says/<%= @questionable_pizza_id %>/no">Nah, you can't convince me thats pizza.</a>
 </body>

@@ -1,1 +1,7 @@
-<ul><%= image_tag questionable_pizza.pizza_image.url, :width => '300' %></ul>
+<ul>
+  <% if questionable_pizza.pizza_image.exists? %>
+    <%= image_tag questionable_pizza.pizza_image.url, :width => '300' %>
+  <% else %>
+    <%= video_tag questionable_pizza.pizza_video.url, :width => '300', :controls => true %>
+  <% end %>
+</ul>
