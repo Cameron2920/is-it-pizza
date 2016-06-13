@@ -13,14 +13,14 @@ class QuestionablePizza < ActiveRecord::Base
   after_create :ask_cam
 
   def pizza_media
-    if self.pizza_image.exists?
+    if self.is_pizza_image
       return pizza_image
     end
     self.pizza_video
   end
 
   def is_pizza_image
-    self.pizza_image.exists?
+    self.pizza_image.file?
   end
 
   private

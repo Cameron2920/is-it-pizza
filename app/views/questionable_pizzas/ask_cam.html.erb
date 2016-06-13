@@ -1,7 +1,9 @@
 <% if @can_ask_cam %>
     <h1>Is it Pizza? Ask Cam</h1>
     <%= form_for @is_it_pizza, url: questionable_pizzas_create_path, html: { multipart: true } do |form| %>
+        <label>Pizza Image</label>
         <%= form.file_field :pizza_image, as: :file %>
+        <label>Pizza Video</label>
         <%= form.file_field :pizza_video, as: :file %>
         <%= form.submit 'Ask Cam' %>
         <p id="error"><%= flash[:error] %></p>
