@@ -4,6 +4,7 @@ class QuestionablePizza < ActiveRecord::Base
   has_attached_file :pizza_video, default_url: "/pizza_videos/missing.png"
   validates_attachment_content_type :pizza_video, content_type: /\Avideo\/.*\Z/, :if => Proc.new { |qp| qp.pizza_video.file? }
   validate :presence_of_video_or_image
+  validate :can_submit_pizza
   validates :client_ip, :presence => true
 
   attr_accessor :pizza_image_link
@@ -62,6 +63,10 @@ class QuestionablePizza < ActiveRecord::Base
 
   def ip_waiting_on_cam
     self.is_it_pizza != :waiting_on_cam || QuestionablePizza.where(:client_ip => self.client_ip, :is_it_pizza => QuestionablePizza.is_it_pizzas[:waiting_on_cam]).count == 0
+  end
+
+  def can_submit_pizza
+    self.errors.add(:base, "you can't overflow cam") if ip_waiting_on_cam
   end
 
   def presence_of_video_or_image
