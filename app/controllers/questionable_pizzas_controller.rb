@@ -7,6 +7,7 @@ class QuestionablePizzasController < ApplicationController
   end
 
   def create
+    @show_index_link = params[:show_index_link]
     create_params = questionable_pizza_params
     pizza_image_link = create_params.delete(:pizza_image_link)
     pizza_video_link = create_params.delete(:pizza_video_link)

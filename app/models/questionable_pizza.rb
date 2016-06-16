@@ -3,8 +3,9 @@ class QuestionablePizza < ActiveRecord::Base
   validates_attachment_content_type :pizza_image, content_type: /\Aimage\/.*\Z/, :if => Proc.new { |qp| qp.pizza_image.file? }
   has_attached_file :pizza_video, default_url: "/pizza_videos/missing.png"
   validates_attachment_content_type :pizza_video, content_type: /\Avideo\/.*\Z/, :if => Proc.new { |qp| qp.pizza_video.file? }
+  before_validation :set_is_it_pizza
   validate :presence_of_video_or_image
-  validate :can_submit_pizza
+  validate :ip_waiting_on_cam, :on => :create
   validates :client_ip, :presence => true
 
   attr_accessor :pizza_image_link
@@ -12,8 +13,6 @@ class QuestionablePizza < ActiveRecord::Base
 
   enum is_it_pizza: [ :yes, :no, :waiting_on_cam ]
 
-  before_save :set_is_it_pizza
-  before_save :ip_waiting_on_cam
   after_create :ask_cam
 
   def pizza_media
@@ -54,7 +53,7 @@ class QuestionablePizza < ActiveRecord::Base
   private
 
   def set_is_it_pizza
-    self.is_it_pizza ||= :waiting_on_cam
+    self.is_it_pizza ||= "waiting_on_cam"
   end
 
   def ask_cam
@@ -62,11 +61,7 @@ class QuestionablePizza < ActiveRecord::Base
   end
 
   def ip_waiting_on_cam
-    self.is_it_pizza != :waiting_on_cam || QuestionablePizza.where(:client_ip => self.client_ip, :is_it_pizza => QuestionablePizza.is_it_pizzas[:waiting_on_cam]).count == 0
-  end
-
-  def can_submit_pizza
-    self.errors.add(:base, "you can't overflow cam") if ip_waiting_on_cam
+    self.errors.add(:base, "woah woah woah slow down") if self.is_it_pizza == "waiting_on_cam" && QuestionablePizza.where(:client_ip => self.client_ip, :is_it_pizza => QuestionablePizza.is_it_pizzas[:waiting_on_cam]).count > 0
   end
 
   def presence_of_video_or_image
