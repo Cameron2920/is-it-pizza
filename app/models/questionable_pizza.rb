@@ -6,6 +6,9 @@ class QuestionablePizza < ActiveRecord::Base
   validate :presence_of_video_or_image
   validates :client_ip, :presence => true
 
+  attr_accessor :pizza_image_link
+  attr_accessor :pizza_video_link
+
   enum is_it_pizza: [ :yes, :no, :waiting_on_cam ]
 
   before_save :set_is_it_pizza
@@ -21,6 +24,30 @@ class QuestionablePizza < ActiveRecord::Base
 
   def is_pizza_image
     self.pizza_image.file?
+  end
+
+  def self.create_with_video_url(params, video_url)
+    questionable_pizza = QuestionablePizza.new(params)
+    begin
+      questionable_pizza.pizza_video = open(video_url)
+      questionable_pizza.save
+    rescue
+      questionable_pizza.errors.add(:pizza_video_link, "can not retrieve video")
+      questionable_pizza
+    end
+    questionable_pizza
+  end
+
+  def self.create_with_image_url(params, image_url)
+    questionable_pizza = QuestionablePizza.new(params)
+    begin
+      questionable_pizza.pizza_image = open(image_url)
+      questionable_pizza.save
+    rescue
+      questionable_pizza.errors.add(:pizza_iamge_link, "can not retrieve image")
+      questionable_pizza
+    end
+    questionable_pizza
   end
 
   private

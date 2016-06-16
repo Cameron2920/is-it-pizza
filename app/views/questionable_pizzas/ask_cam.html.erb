@@ -6,6 +6,13 @@
         <label>Pizza Video</label>
         <%= form.file_field :pizza_video, as: :file %>
         <%= form.submit 'Ask Cam' %>
+        <br>
+        <h1>ORRRRR, put in a nice link</h1>
+        <label>Pizza Image Link</label>
+        <%= form.text_field :pizza_image_link %>
+        <label>Pizza Video Link</label>
+        <%= form.text_field :pizza_video_link %>
+        <%= form.submit 'Ask Cam' %>
         <p id="error"><%= flash[:error] %></p>
     <% end %>
 <% else %>
