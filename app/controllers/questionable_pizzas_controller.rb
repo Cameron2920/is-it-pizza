@@ -19,11 +19,24 @@ class QuestionablePizzasController < ApplicationController
       @is_it_pizza = QuestionablePizza.create(create_params)
     end
     flash[:error]
-    if @is_it_pizza.errors.any?
-      flash[:error] = @is_it_pizza.errors.first
-      redirect_to questionable_pizzas_ask_cam_path, :flash => { :error =>  @is_it_pizza.errors.first }
+
+    respond_to do |format|
+      format.html {
+        if @is_it_pizza.errors.any?
+          flash[:error] = @is_it_pizza.errors.first
+          redirect_to questionable_pizzas_ask_cam_path, :flash => { :error =>  @is_it_pizza.errors.first }
+        end
+      }
+      format.json {
+        if @is_it_pizza.errors.any?
+          render json: @is_it_pizza.errors, :status => :unprocessable_entity
+        else
+          head :ok
+        end
+      }
     end
   end
+
 
   def cam_says
     @questionable_pizza = QuestionablePizza.find(params[:id])
