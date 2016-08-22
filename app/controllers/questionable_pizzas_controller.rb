@@ -3,6 +3,10 @@ class QuestionablePizzasController < ApplicationController
 
   def ask_cam
     @can_ask_cam = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:waiting_on_cam], :client_ip => request.remote_ip).count == 0
+    @is_temporary_banned = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:no], :client_ip => request.remote_ip).where("created_at > ? ", DateTime.now - 2.days).count > 2
+    if @is_temporary_banned
+      @unban_time = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:no], :client_ip => request.remote_ip).where("created_at > ? ", DateTime.now - 2.days).order("created_at ASC").first.created_at + 2.days
+    end
     @is_it_pizza = QuestionablePizza.new
   end
 
