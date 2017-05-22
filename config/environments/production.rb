@@ -90,4 +90,6 @@ Rails.application.configure do
       user_name: 'askcamaboutpizza@gmail.com',
       password:  'nicepassword'
   }
+
+  config.action_mailer.default_url_options = { :host => 'gay.dynamic-dns.net' }
 end
