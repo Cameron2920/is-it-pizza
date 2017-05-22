@@ -30,8 +30,11 @@
             <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(:user) %><br />
         <% end %>
     <% else %>
+        <%= ["bonjour", "ahoy", "oh i didnt c u there", "oh heyyyyy", "is this THE"].sample + "," %>
         <%= @current_user.first_name %>
+        "<%= @current_user.middle_name %>"
         <%= @current_user.last_name %>
+        <br>
         <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
     <% end %>
 <% end %>
