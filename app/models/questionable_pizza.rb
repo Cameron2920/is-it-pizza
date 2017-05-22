@@ -12,6 +12,8 @@ class QuestionablePizza < ActiveRecord::Base
   attr_accessor :pizza_image_link
   attr_accessor :pizza_video_link
 
+  MAX_NUMBER_OF_PENDING_PIZZAS = 5
+
   enum is_it_pizza: [ :yes, :no, :waiting_on_cam ]
 
   after_create :ask_cam
@@ -32,7 +34,7 @@ class QuestionablePizza < ActiveRecord::Base
     begin
       questionable_pizza.pizza_video = open(video_url)
       questionable_pizza.save
-    rescue
+    rescue Errno::ENOENT
       questionable_pizza.errors.add(:pizza_video_link, "can not retrieve video")
       questionable_pizza
     end
@@ -44,7 +46,7 @@ class QuestionablePizza < ActiveRecord::Base
     begin
       questionable_pizza.pizza_image = open(image_url)
       questionable_pizza.save
-    rescue
+    rescue Errno::ENOENT
       questionable_pizza.errors.add(:pizza_iamge_link, "can not retrieve image")
       questionable_pizza
     end
@@ -62,7 +64,11 @@ class QuestionablePizza < ActiveRecord::Base
   end
 
   def ip_waiting_on_cam
-    self.errors.add(:base, "woah woah woah slow down") if self.is_it_pizza == "waiting_on_cam" && QuestionablePizza.where(:client_ip => self.client_ip, :is_it_pizza => QuestionablePizza.is_it_pizzas[:waiting_on_cam]).count > 0
+    if !user.nil?
+      user.can_ask_cam
+    else
+      self.errors.add(:base, "woah woah woah slow down") if self.is_it_pizza == "waiting_on_cam" && QuestionablePizza.where(:client_ip => self.client_ip, :is_it_pizza => QuestionablePizza.is_it_pizzas[:waiting_on_cam]).count > 0
+    end
   end
 
   def presence_of_video_or_image

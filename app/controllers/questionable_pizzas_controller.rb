@@ -2,10 +2,20 @@ class QuestionablePizzasController < ApplicationController
   http_basic_authenticate_with name: ENV['CAM_NAME'], password: ENV['CAM_PASSWORD'], only: :cam_says
 
   def ask_cam
-    @can_ask_cam = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:waiting_on_cam], :client_ip => request.remote_ip).count == 0
-    @is_temporary_banned = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:no], :client_ip => request.remote_ip).where("created_at > ? ", DateTime.now - 69.hours).count > 2
-    if @is_temporary_banned
-      @unban_time = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:no], :client_ip => request.remote_ip).where("created_at > ? ", DateTime.now - 69.hours).order("created_at ASC").first.created_at + 69.hours
+    if !@current_user.nil?
+      @can_ask_cam = @current_user.can_ask_cam
+      @is_temporary_banned = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:no], :user => @current_user).where("created_at > ? ", DateTime.now - 69.hours).count > 2
+
+      if @is_temporary_banned
+        @unban_time = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:no], :user => @current_user).where("created_at > ? ", DateTime.now - 69.hours).order("created_at ASC").first.created_at + 69.hours
+      end
+    else
+      @can_ask_cam = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:waiting_on_cam], :client_ip => request.remote_ip).count == 0
+      @is_temporary_banned = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:no], :client_ip => request.remote_ip).where("created_at > ? ", DateTime.now - 69.hours).count > 2
+
+      if @is_temporary_banned
+        @unban_time = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:no], :client_ip => request.remote_ip).where("created_at > ? ", DateTime.now - 69.hours).order("created_at ASC").first.created_at + 69.hours
+      end
     end
     @is_it_pizza = QuestionablePizza.new
   end
@@ -62,6 +72,7 @@ class QuestionablePizzasController < ApplicationController
   def questionable_pizza_params
     accepted_params = params.fetch(:questionable_pizza, {}).permit(:pizza_image, :pizza_video, :pizza_image_link, :pizza_video_link)
     accepted_params[:client_ip] = request.remote_ip
+    accepted_params[:user] = @current_user
     accepted_params
   end
 end
