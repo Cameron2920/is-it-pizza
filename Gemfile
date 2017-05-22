@@ -42,4 +42,6 @@ gem 'paperclip'
 
 gem 'actionmailer'
 
+gem 'devise'
+
 gem 'unicorn', group: :production

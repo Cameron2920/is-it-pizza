@@ -1,4 +1,5 @@
 class QuestionablePizza < ActiveRecord::Base
+  belongs_to :user
   has_attached_file :pizza_image, default_url: "/pizza_images/missing.png"
   validates_attachment_content_type :pizza_image, content_type: /\Aimage\/.*\Z/, :if => Proc.new { |qp| qp.pizza_image.file? }
   has_attached_file :pizza_video, default_url: "/pizza_videos/missing.png"
