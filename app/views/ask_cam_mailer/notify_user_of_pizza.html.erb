@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<h1>Hey <%= @user.first_name %> "<%= @user.middle_name %>" <%= @user.last_name %></h1>
+<% if @is_it_pizza == "yes" %>
+    Wowee, gr8 find. that was 100% pizza
+<% else %>
+  We don't accept french pizzas. rules are rules
+<% end %>
+</body>
+</html>

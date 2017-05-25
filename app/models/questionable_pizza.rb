@@ -18,6 +18,12 @@ class QuestionablePizza < ActiveRecord::Base
 
   after_create :ask_cam
 
+  after_update do
+    if !self.user.nil? && self.is_it_pizza_was == "waiting_on_cam"  && self.is_it_pizza != "waiting_on_cam"
+      AskCamMailer.notify_user_of_pizza(self.user, self).deliver
+    end
+  end
+
   def pizza_media
     if self.is_pizza_image
       return pizza_image
