@@ -5,7 +5,7 @@ class AskCamMailer < ActionMailer::Base
     @media_file_path = media_file_path
     @questionable_pizza_id = questionable_pizza_id
     @is_pizza_image = is_pizza_image
-    mail(to: 'cam@monolithinteractive.com', subject: 'We need your help cam')
+    mail(to: 'sassyscamboli@gmail.com', subject: 'We need your help cam')
   end
 
   def notify_user_of_pizza(user, questionable_pizza)
