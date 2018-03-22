@@ -1,4 +1,6 @@
 class QuestionablePizza < ActiveRecord::Base
+  YOUTUBE_REGEX = %r(^(http[s]*:\/\/)?(www.)?(youtube.com|youtu.be)\/(watch\?v=){0,1}([a-zA-Z0-9_-]{11}))
+
   belongs_to :user
   has_attached_file :pizza_image, default_url: "/pizza_images/missing.png"
   validates_attachment_content_type :pizza_image, content_type: /\Aimage\/.*\Z/, :if => Proc.new { |qp| qp.pizza_image.file? }
@@ -38,7 +40,7 @@ class QuestionablePizza < ActiveRecord::Base
   def self.create_with_video_url(params, video_url)
     questionable_pizza = QuestionablePizza.new(params)
     begin
-      questionable_pizza.pizza_video = open(video_url)
+      questionable_pizza.pizza_video = download_video(video_url)
       questionable_pizza.save
     rescue Errno::ENOENT
       questionable_pizza.errors.add(:pizza_video_link, "can not retrieve video")
@@ -60,6 +62,16 @@ class QuestionablePizza < ActiveRecord::Base
   end
 
   private
+
+  def self.download_video(video_url)
+    if YOUTUBE_REGEX.match(video_url)
+      temp_file = Tempfile.new(['youtube_pizza', '.mp4'])
+      YoutubeDL.download(video_url, :output => temp_file.path, :format => 'mp4')
+      open(temp_file.path)
+    else
+      open(video_url)
+    end
+  end
 
   def set_is_it_pizza
     self.is_it_pizza ||= "waiting_on_cam"

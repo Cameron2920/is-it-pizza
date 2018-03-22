@@ -44,4 +44,6 @@ gem 'actionmailer'
 
 gem 'devise'
 
+gem 'youtube-dl.rb'
+
 gem 'unicorn', group: :production
