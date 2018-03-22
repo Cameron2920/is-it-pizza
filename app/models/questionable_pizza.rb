@@ -3,9 +3,9 @@ class QuestionablePizza < ActiveRecord::Base
 
   belongs_to :user
   has_attached_file :pizza_image, default_url: "/pizza_images/missing.png"
-  validates_attachment_content_type :pizza_image, content_type: /\Aimage\/.*\Z/, :if => Proc.new { |qp| qp.pizza_image.file? }
+  validates_attachment_content_type :pizza_image, content_type: /\Aimage\/.*\Z/, :if => Proc.new { |qp| qp.pizza_image.file? }, :size => { less_than: 10.megabytes }
   has_attached_file :pizza_video, default_url: "/pizza_videos/missing.png"
-  validates_attachment_content_type :pizza_video, content_type: /\Avideo\/.*\Z/, :if => Proc.new { |qp| qp.pizza_video.file? }
+  validates_attachment_content_type :pizza_video, content_type: /\Avideo\/.*\Z/, :if => Proc.new { |qp| qp.pizza_video.file? }, :size => { less_than: 40.megabytes }
   before_validation :set_is_it_pizza
   validate :presence_of_video_or_image
   validate :ip_waiting_on_cam, :on => :create
