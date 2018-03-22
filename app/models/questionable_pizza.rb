@@ -65,9 +65,10 @@ class QuestionablePizza < ActiveRecord::Base
 
   def self.download_video(video_url)
     if YOUTUBE_REGEX.match(video_url)
-      temp_file = Tempfile.new(['youtube_pizza', '.mp4'], Rails.root.join('tmp'))
-      YoutubeDL.download(video_url, :output => temp_file.path, :format => 'mp4')
-      open(temp_file.path)
+      temp_file = Tempfile.new(['youtube_pizza'])
+      temp_file_path = temp_file.path + '.mp4'
+      YoutubeDL.download(video_url, :output => temp_file_path, :format => 'mp4')
+      open(temp_file_path)
     else
       open(video_url)
     end
