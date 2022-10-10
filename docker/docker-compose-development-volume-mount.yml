@@ -1,0 +1,7 @@
+version: '3'
+services:
+  pharmacy:
+    tty: true
+    stdin_open: true
+    volumes:
+      - ../:/var/app/

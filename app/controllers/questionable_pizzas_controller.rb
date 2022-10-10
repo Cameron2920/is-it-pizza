@@ -38,13 +38,13 @@ class QuestionablePizzasController < ApplicationController
     respond_to do |format|
       format.html {
         if @is_it_pizza.errors.any?
-          flash[:error] = @is_it_pizza.errors.first
-          redirect_to questionable_pizzas_ask_cam_path, :flash => { :error =>  @is_it_pizza.errors.first }
+          flash[:error] = @is_it_pizza.errors.full_messages.join(". ")
+          redirect_to questionable_pizzas_ask_cam_path, :flash => { :error =>  @is_it_pizza.errors.full_messages.join(". ") }
         end
       }
       format.json {
         if @is_it_pizza.errors.any?
-          render json: @is_it_pizza.errors, :status => :unprocessable_entity
+          render json: @is_it_pizza.errors.full_messages, :status => :unprocessable_entity
         else
           head :ok
         end

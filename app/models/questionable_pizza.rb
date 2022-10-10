@@ -1,7 +1,7 @@
 class QuestionablePizza < ActiveRecord::Base
   YOUTUBE_REGEX = %r(^(http[s]*:\/\/)?(www.)?(youtube.com|youtu.be)\/(watch\?v=){0,1}([a-zA-Z0-9_-]{11}))
 
-  belongs_to :user
+  belongs_to :user, optional: true
   has_attached_file :pizza_image, default_url: "/pizza_images/missing.png"
   validates_attachment_content_type :pizza_image, content_type: /\Aimage\/.*\Z/, :if => Proc.new { |qp| qp.pizza_image.file? }, :size => { less_than: 10.megabytes }
   has_attached_file :pizza_video, default_url: "/pizza_videos/missing.png"

@@ -1,0 +1,42 @@
+version: '3'
+networks:
+  development:
+volumes:
+  db_data:
+  shared_data:
+  elasticsearch_data:
+services:
+  database:
+    image: postgres:12.5-alpine
+    container_name: database
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - shared_data:/var/shared
+    networks:
+      - development
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5099:5432
+  app:
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    container_name: app
+    volumes:
+      - shared_data:/var/shared
+    networks:
+      - development
+    ports:
+      - 3000:3000
+    command: tail -f /dev/null
+    environment:
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: password
+      DATABASE_HOST: database
+      DATABASE_PORT: 5432
+      DATABASE_NAME: pharmacy_development
+      ELASTICSEARCH_URL: http://elastic:Testing123@elasticsearch:9200
+    depends_on:
+      - database
