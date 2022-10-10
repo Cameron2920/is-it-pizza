@@ -1,0 +1,25 @@
+version: '3'
+networks:
+  network:
+volumes:
+  db_data:
+  shared_data:
+services:
+  database:
+    image: postgres:12.5-alpine
+    container_name: database
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - shared_data:/var/shared
+    networks:
+      - network
+    ports:
+      - 5099:5432
+  app:
+    container_name: app
+    volumes:
+      - shared_data:/var/shared
+    networks:
+      - network
+    depends_on:
+      - database

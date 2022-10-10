@@ -1,3 +1,3 @@
 #!/bin/bash
-bundle exec rake db:migrate
-bundle exec unicorn -c config/unicorn.rb -p 8080
+bundle exec rake db:prepare
+bundle exec puma -p 8080

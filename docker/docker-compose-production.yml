@@ -1,0 +1,15 @@
+version: '3'
+services:
+  database:
+    env_file:
+      - ../database.env
+  app:
+    image: camcamcam/is-it-pizza:latest
+    tty: true
+    stdin_open: true
+    volumes:
+      - ../:/var/app/
+    ports:
+      - 80:8080
+    env_file:
+      - ../app.env

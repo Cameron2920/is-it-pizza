@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-
+ruby '2.7.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '7.0'
 # Use postgresql as the database for Active Record
@@ -44,7 +44,7 @@ gem 'devise'
 
 gem 'youtube-dl.rb'
 
-gem 'unicorn', group: :production
+gem 'puma'
 
 group :development do
   gem 'web-console', '~> 2.0'
