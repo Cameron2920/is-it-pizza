@@ -9,7 +9,7 @@ USER app-user
 COPY . .
 RUN gem install bundler
 RUN bundle install
-RUN chmod +x run_docker_server.sh
+RUN chmod +x docker/start-server.sh
 RUN chmod +x bin/rake
 EXPOSE 8080
 CMD "./docker/start-server.sh"

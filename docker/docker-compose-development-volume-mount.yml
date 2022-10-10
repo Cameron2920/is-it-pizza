@@ -1,6 +1,6 @@
 version: '3'
 services:
-  pharmacy:
+  app:
     tty: true
     stdin_open: true
     volumes:

@@ -34,4 +34,4 @@ fi
 
 docker compose -f ./docker/docker-compose-development.yml \
   -f ./docker/$VOLUME_MOUNT_FILE_NAME.yml \
-  $DOCKER_COMPOSE_COMMAND -u Pharmacy pharmacy $COMMAND
+  $DOCKER_COMPOSE_COMMAND -u app-user app $COMMAND
