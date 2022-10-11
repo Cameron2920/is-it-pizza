@@ -3,6 +3,7 @@ networks:
   network:
 volumes:
   db_data:
+  file_storage_data:
   shared_data:
 services:
   database:
@@ -19,6 +20,7 @@ services:
     container_name: app
     volumes:
       - shared_data:/var/shared
+      - file_storage_data:/var/app/public/system
     networks:
       - network
     depends_on:

@@ -1,5 +1,5 @@
 class QuestionablePizzasController < ApplicationController
-  http_basic_authenticate_with name: ENV['CAM_NAME'], password: ENV['CAM_PASSWORD'], only: :cam_says
+  http_basic_authenticate_with name: "cam", password: Rails.application.config.cam_password, only: :cam_says
 
   def ask_cam
     if !@current_user.nil?

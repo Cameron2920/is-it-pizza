@@ -103,8 +103,8 @@ Rails.application.configure do
       authentication: "plain",
       enable_starttls_auto: true,
       user_name: 'askcamaboutpizza@gmail.com',
-      password:  'nicepassword'
+      password:  ENV["MAILER_PASSWORD"]
   }
 
-  config.action_mailer.default_url_options = { :host => 'gay.dynamic-dns.net' }
+  config.action_mailer.default_url_options = { :host => ENV["HOSTNAME"] }
 end
