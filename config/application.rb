@@ -19,5 +19,8 @@ module IsItPizza
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.cam_password = ENV["CAM_PASSWORD"]
+
+    config.action_controller.asset_host = ENV["HOSTNAME"].nil? ? "http://localhost:3000" : "http://#{ENV["HOSTNAME"]}"
+    config.action_mailer.asset_host = ENV["HOSTNAME"].nil? ? "http://localhost:3000" : "http://#{ENV["HOSTNAME"]}"
   end
 end

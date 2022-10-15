@@ -20,7 +20,7 @@ services:
     container_name: app
     volumes:
       - shared_data:/var/shared
-      - file_storage_data:/var/app/public/system
+      - ../public/system:/var/app/public/system
     networks:
       - network
     depends_on:

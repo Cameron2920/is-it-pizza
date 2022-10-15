@@ -6,4 +6,4 @@ rsync -a -e "ssh -i ~/.ssh/server_keys/is-it-pizza" docker $SSH_URL:/var/is-it-p
 rsync -a -e "ssh -i ~/.ssh/server_keys/is-it-pizza" start-production-server.sh $SSH_URL:/var/is-it-pizza/ || { echo "Failed to upload files"; exit 1; }
 rsync -a -e "ssh -i ~/.ssh/server_keys/is-it-pizza" app.env $SSH_URL:/var/is-it-pizza/ || { echo "Failed to upload files"; exit 1; }
 rsync -a -e "ssh -i ~/.ssh/server_keys/is-it-pizza" database.env $SSH_URL:/var/is-it-pizza/ || { echo "Failed to upload files"; exit 1; }
-ssh -i ~/.ssh/server_keys/is-it-pizza -t $SSH_URL "cd /var/is-it-pizza/ && STOP=true ./start-production-server.sh" || { echo "Failed to restart server"; exit 1; }
+ssh -i ~/.ssh/server_keys/is-it-pizza -t $SSH_URL "cd /var/is-it-pizza/ && ./start-production-server.sh" || { echo "Failed to restart server"; exit 1; }

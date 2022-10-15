@@ -1,4 +1,4 @@
 docker-compose -f ./docker/docker-compose.yml \
-  -f ./docker/docker-compose-production.yml stop app
+  -f ./docker/docker-compose-production.yml pull
 docker-compose -f ./docker/docker-compose.yml \
   -f ./docker/docker-compose-production.yml up -d
