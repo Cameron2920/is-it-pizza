@@ -8,6 +8,20 @@ services:
     tty: true
     stdin_open: true
     ports:
-      - 80:8080
+      - 8080:8080
     env_file:
       - ../app.env
+  webserver:
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    restart: always
+    volumes:
+      - ./nginx/conf/:/etc/nginx/conf.d/:ro
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
+    networks:
+      - network
+    depends_on:
+      - app
