@@ -6,11 +6,11 @@
 <body>
 <h1>Hey cam, is this pizza?</h1>
 <% if @is_pizza_image %>
-    <img src="<%= ENV['HOST'] %>/<%= @media_file_path %>">
+    <img src="<%= asset_url(@media_file_path) %>">
 <% else %>
-    <a href="<%= ENV['HOST'] %>/<%= @media_file_path %>">Click Here to see a cool video</a>
+    <a href="<%= asset_url(@media_file_path) %>">Click Here to see a cool video</a>
 <% end %>
-<a href="<%= ENV['HOST'] %>/questionable_pizzas/cam_says/<%= @questionable_pizza_id %>/yes">Yeah, it's pizza alrightee.</a>
-<a href="<%= ENV['HOST'] %>/questionable_pizzas/cam_says/<%= @questionable_pizza_id %>/no">Nah, you can't convince me thats pizza.</a>
+<a href="<%= asset_url("/questionable_pizzas/cam_says/#{@questionable_pizza_id}/yes") %>">Yeah, it's pizza alrightee.</a>
+<a href="<%= asset_url("/questionable_pizzas/cam_says/#{@questionable_pizza_id}/no") %>">Nah, you can't convince me thats pizza.</a>
 </body>
 </html>
