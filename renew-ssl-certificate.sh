@@ -1,2 +1,0 @@
-docker-compose -f ./docker/docker-compose-ssl-renewal.yml run --rm certbot certonly --webroot --webroot-path /var/www/certbot/ -d ramsay.cam
-docker-compose -f ./docker/docker-compose-ssl-renewal.yml run --rm certbot renew
