@@ -20,7 +20,7 @@ module IsItPizza
     # config.eager_load_paths << Rails.root.join("extras")
     config.cam_password = ENV["CAM_PASSWORD"]
 
-    config.action_controller.asset_host = ENV["HOSTNAME"].nil? ? "http://localhost:3000" : "http://#{ENV["HOSTNAME"]}"
-    config.action_mailer.asset_host = ENV["HOSTNAME"].nil? ? "http://localhost:3000" : "http://#{ENV["HOSTNAME"]}"
+    config.action_controller.asset_host = ENV["HOSTNAME"].nil? ? "http://localhost:3000" : "https://#{ENV["HOSTNAME"]}"
+    config.action_mailer.asset_host = ENV["HOSTNAME"].nil? ? "http://localhost:3000" : "https://#{ENV["HOSTNAME"]}"
   end
 end

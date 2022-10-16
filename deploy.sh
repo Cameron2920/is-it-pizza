@@ -1,4 +1,4 @@
-SSH_URL="root@178.128.135.203"
+SSH_URL="root@ramsay.cam"
 docker login || { echo "Failed to login to docker"; exit 1; }
 docker build -t camcamcam/is-it-pizza -f docker/Dockerfile . || { echo "Failed to build docker image"; exit 1; }
 docker push camcamcam/is-it-pizza || { echo "Failed to push docker image"; exit 1; }
