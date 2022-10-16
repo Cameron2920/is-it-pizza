@@ -64,7 +64,8 @@ class QuestionablePizzasController < ApplicationController
   end
 
   def index
-    @questionable_pizzas = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:yes]).limit(15).order('updated_at DESC')
+    @questionable_pizzas = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:yes]).order('updated_at DESC')
+    @questionable_pizzas = @questionable_pizzas.page(params[:page])
   end
 
   private
