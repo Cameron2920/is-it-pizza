@@ -18,3 +18,5 @@
 /public/system
 /database.env
 /app.env
+/image_export/
+/export/
