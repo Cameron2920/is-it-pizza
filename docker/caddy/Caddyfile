@@ -4,6 +4,9 @@
 ramsay.cam {
     reverse_proxy app:8080
 }
+isitpizza.com {
+    reverse_proxy app:8080
+}
 localhost:443 {
     reverse_proxy app:8080
     tls internal
