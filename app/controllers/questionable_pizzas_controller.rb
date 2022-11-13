@@ -23,6 +23,7 @@ class QuestionablePizzasController < ApplicationController
   def create
     @show_index_link = params[:show_index_link] != "false"
     create_params = questionable_pizza_params
+    create_params[:is_it_pizza] = :yes if @current_user&.is_cam?
     pizza_image_link = create_params.delete(:pizza_image_link)
     pizza_video_link = create_params.delete(:pizza_video_link)
 

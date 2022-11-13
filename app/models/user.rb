@@ -29,4 +29,8 @@ class User < ActiveRecord::Base
                              "no middle name required", "pomagranite buttcheeks"]
     possible_middle_names.sample
   end
+
+  def is_cam?
+    Rails.application.config.cam_emails.include?(self.email)
+  end
 end

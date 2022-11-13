@@ -16,9 +16,9 @@ namespace :questionable_pizzas do
 
       if supported_image_types.find{|image_type| image_path.downcase.ends_with?(image_type)}
         if questionable_pizza.is_it_pizza&.to_sym == :yes
-          FileUtils.cp("#{source_directory}/#{image_path}", "./export/#{timestamp}/pizza")
+          FileUtils.cp("#{source_directory}/#{image_path}", "./export/#{timestamp}/pizza") rescue nil
         elsif questionable_pizza.is_it_pizza&.to_sym == :no
-          FileUtils.cp("#{source_directory}/#{image_path}", "./export/#{timestamp}/not_pizza")
+          FileUtils.cp("#{source_directory}/#{image_path}", "./export/#{timestamp}/not_pizza") rescue nil
         end
       end
     end
