@@ -31,6 +31,6 @@ class User < ActiveRecord::Base
   end
 
   def is_cam?
-    Rails.application.config.cam_emails.include?(self.email)
+    Rails.application.config.cam_emails&.include?(self.email)
   end
 end

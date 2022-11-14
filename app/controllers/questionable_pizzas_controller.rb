@@ -2,21 +2,7 @@ class QuestionablePizzasController < ApplicationController
   before_action :authenticate_cam, only: :cam_says
 
   def ask_cam
-    if !@current_user.nil?
-      @can_ask_cam = @current_user.can_ask_cam
-      @is_temporary_banned = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:no], :user => @current_user).where("created_at > ? ", DateTime.now - 69.hours).count > 2
-
-      if @is_temporary_banned
-        @unban_time = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:no], :user => @current_user).where("created_at > ? ", DateTime.now - 69.hours).order("created_at ASC").first.created_at + 69.hours
-      end
-    else
-      @can_ask_cam = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:waiting_on_cam], :client_ip => request.remote_ip).count == 0
-      @is_temporary_banned = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:no], :client_ip => request.remote_ip).where("created_at > ? ", DateTime.now - 69.hours).count > 2
-
-      if @is_temporary_banned
-        @unban_time = QuestionablePizza.where(:is_it_pizza => QuestionablePizza.is_it_pizzas[:no], :client_ip => request.remote_ip).where("created_at > ? ", DateTime.now - 69.hours).order("created_at ASC").first.created_at + 69.hours
-      end
-    end
+    can_ask?
     @is_it_pizza = QuestionablePizza.new
   end
 
